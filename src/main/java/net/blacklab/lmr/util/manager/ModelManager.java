@@ -21,7 +21,6 @@ import java.util.zip.ZipInputStream;
 
 import net.blacklab.lib.classutil.FileClassUtil;
 import net.blacklab.lmr.LittleMaidReengaged;
-import net.blacklab.lmr.client.resource.OldZipTexturesWrapper;
 import net.blacklab.lmr.entity.maidmodel.IModelEntity;
 import net.blacklab.lmr.entity.maidmodel.ModelMultiBase;
 import net.blacklab.lmr.entity.maidmodel.TextureBox;
@@ -540,7 +539,7 @@ public class ModelManager {
 						addTextureName(zipentry.getName(), pSearch);
 						if(FMLCommonHandler.instance().getSide()==Side.CLIENT&&
 								(zipentry.getName().startsWith(lt1)||zipentry.getName().startsWith(lt2)))
-							OldZipTexturesWrapper.keys.add(zipentry.getName());
+							net.blacklab.lmr.client.resource.OldZipTexturesWrapper.keys.add(zipentry.getName());
 					}
 				}
 			} while(true);
@@ -601,7 +600,7 @@ public class ModelManager {
 									String pr="assets/minecraft/";
 									if(cname.startsWith(pr)) cname=cname.substring(pr.length());
 									if(FMLCommonHandler.instance().getSide()==Side.CLIENT)
-										OldZipTexturesWrapper.keys.add(cname);
+										net.blacklab.lmr.client.resource.OldZipTexturesWrapper.keys.add(cname);
 								}
 							}
 //							addTextureName(s.substring(i).replace('\\', '/'));

@@ -7,6 +7,9 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 public class ProxyCommon
 {
 	public int OFFSET_COUNT = 0;
+
+	public void init() { }
+
 	public void rendererRegister() {}
 	public void onItemPickup(EntityPlayer lmm_EntityLittleMaidAvatar,Entity entity, int i) {}
 	public void onCriticalHit(EntityPlayer pAvatar, Entity par1Entity) {}
