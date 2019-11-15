@@ -11,8 +11,6 @@ import java.util.Random;
 
 import net.blacklab.lib.config.ConfigList;
 import net.blacklab.lib.vevent.VEventBus;
-import net.blacklab.lmr.achievements.AchievementsLMRE;
-import net.blacklab.lmr.client.resource.OldZipTexturesWrapper;
 import net.blacklab.lmr.client.resource.SoundResourcePack;
 import net.blacklab.lmr.entity.EntityLittleMaid;
 import net.blacklab.lmr.event.EventHookLMRE;
@@ -31,33 +29,26 @@ import net.blacklab.lmr.util.manager.EntityModeManager;
 import net.blacklab.lmr.util.manager.ModelManager;
 import net.blacklab.lmr.util.manager.StabilizerManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(
 		modid = LittleMaidReengaged.DOMAIN,
@@ -309,12 +300,7 @@ public class LittleMaidReengaged {
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
-		if (CommonHelper.isClient) {
-			SimpleReloadableResourceManager resourceManager = ((SimpleReloadableResourceManager)Minecraft.getMinecraft().getResourceManager());
-			resourceManager.reloadResourcePack(new SoundResourcePack());
-			resourceManager.reloadResourcePack(new OldZipTexturesWrapper());
-			Minecraft.getMinecraft().getSoundHandler().onResourceManagerReload(resourceManager);
-		}
+		proxy.init();
 
 		MinecraftForge.EVENT_BUS.register(new EventHookLMRE());
 		VEventBus.instance.registerListener(new EventHookLMRE());
@@ -358,8 +344,11 @@ public class LittleMaidReengaged {
 						)
 				{
 					EntityRegistry.addSpawn(EntityLittleMaid.class, cfg_spawnWeight, cfg_minGroupSize, cfg_maxGroupSize, EnumCreatureType.CREATURE, biome);
-					System.out.println("Registering spawn in " + biome.getBiomeName());
-					Debug("Registering maids to spawn in " + biome.getBiomeName());
+
+					if (CommonHelper.isClient) {
+						System.out.println("Registering spawn in " + biome.getBiomeName());
+						Debug("Registering maids to spawn in " + biome.getBiomeName());
+					}
 				}
 			}
 		}

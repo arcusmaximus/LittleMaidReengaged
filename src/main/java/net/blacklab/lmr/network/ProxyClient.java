@@ -6,6 +6,7 @@ import net.blacklab.lmr.LittleMaidReengaged;
 import net.blacklab.lmr.client.entity.EntityLittleMaidForTexSelect;
 import net.blacklab.lmr.client.gui.GuiIFF;
 import net.blacklab.lmr.client.gui.inventory.GuiMaidInventory;
+import net.blacklab.lmr.client.resource.SoundResourcePack;
 import net.blacklab.lmr.client.sound.SoundLoader;
 import net.blacklab.lmr.entity.EntityLittleMaid;
 import net.blacklab.lmr.entity.EntityMarkerDummy;
@@ -20,6 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleItemPickup;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +36,15 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
  */
 public class ProxyClient extends ProxyCommon
 {
+    @Override
+	public void init() {
+	    System.out.println("Initializing Resource packs");
+		SimpleReloadableResourceManager resourceManager = ((SimpleReloadableResourceManager)Minecraft.getMinecraft().getResourceManager());
+		resourceManager.reloadResourcePack(new SoundResourcePack());
+		resourceManager.reloadResourcePack(new net.blacklab.lmr.client.resource.OldZipTexturesWrapper());
+		Minecraft.getMinecraft().getSoundHandler().onResourceManagerReload(resourceManager);
+    }
+
 	public void rendererRegister() {
 		ModelLoader.setCustomModelResourceLocation(
 				LittleMaidReengaged.spawnEgg, 0, new ModelResourceLocation(

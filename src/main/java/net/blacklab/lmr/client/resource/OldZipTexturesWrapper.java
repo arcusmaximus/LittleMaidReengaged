@@ -9,12 +9,14 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSet;
 
 import net.blacklab.lmr.util.FileList;
-import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.client.resources.data.MetadataSerializer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class OldZipTexturesWrapper implements IResourcePack {
+@SideOnly(Side.CLIENT)
+public class OldZipTexturesWrapper implements net.minecraft.client.resources.IResourcePack {
 
 	public static ArrayList<String> keys = new ArrayList<String>();
 
